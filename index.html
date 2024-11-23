@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Excel Formula to JS Converter</title>
+        <script src="https://cdn.jsdelivr.net/npm/excel-formula@1.5.0/dist/excel-formula.min.js"></script>
+        <!-- Tailwind CSS CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body
+        class="bg-gray-100 font-sans antialiased flex items-center justify-center min-h-screen"
+    >
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h1 class="text-3xl font-semibold text-center text-indigo-600 mb-6">
+                Excel Formula to JavaScript Converter
+            </h1>
+
+            <!-- Input for Excel Formula -->
+            <div class="mb-4">
+                <label
+                    for="excelFormula"
+                    class="block text-gray-700 text-lg mb-2"
+                    >Enter Excel Formula:</label
+                >
+                <input
+                    type="text"
+                    id="excelFormula"
+                    placeholder="e.g., IF(1+1=2, 'true', 'false')"
+                    class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+            </div>
+
+            <!-- Button to convert and evaluate -->
+            <button
+                onclick="convertAndEvaluate()"
+                class="w-full py-3 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition duration-200"
+            >
+                Convert and Evaluate
+            </button>
+
+            <!-- Display Result -->
+            <h3 class="text-xl mt-6 mb-2 text-gray-800">Result:</h3>
+            <p
+                id="result"
+                class="p-3 border border-gray-300 rounded-md bg-gray-50 text-gray-800"
+            ></p>
+        </div>
+
+        <script>
+            function convertAndEvaluate() {
+                // Get the input formula
+                const formula = document.getElementById("excelFormula").value;
+
+                try {
+                    // Convert Excel formula to JavaScript using excelFormulaUtilities
+                    const jsFormula =
+                        excelFormulaUtilities.formula2JavaScript(formula);
+
+                    // Display the converted JavaScript formula (for reference)
+                    console.log("Converted JS Formula:", jsFormula);
+
+                    // Use eval to evaluate the JavaScript formula
+                    const result = eval(jsFormula);
+
+                    // Display the result of the evaluation
+                    document.getElementById("result").textContent = result;
+                } catch (error) {
+                    document.getElementById("result").textContent =
+                        "Error: " + error.message;
+                }
+            }
+        </script>
+    </body>
+</html>
